@@ -1,0 +1,21 @@
+id          (primary key, auto incrementing)
+name        (file name)
+path        (path on the server)
+type        (file type)
+size        (file size in bytes)
+owner       (username of user who uploaded the file)
+upload_date (timestamp at time the file was uploaded)
+
+
+Table creation SQL code below
+
+CREATE TABLE `uploads` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `path` varchar(255) NOT NULL,
+    `type` varchar(25) NOT NULL,
+    `size` varchar(25) NOT NULL,
+    `owner` varchar(25) NOT NULL,
+    `upload_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
