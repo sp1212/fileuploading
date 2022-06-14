@@ -21,17 +21,7 @@ $db = new Database();
 
 $folderPath = "uploads/";
 
-if (isset($_POST["viewFile"])) {
-    $data = $db->query("select path from uploads where id = ?", "d", $_POST["viewFile"]);
-    if ($data === false) {
-        echo "Error finding file.";
-    }
-    else if (!empty($data)) {
-        $path = $data[0]['path'];
-        header("Location: " . $path);
-    }
-}
-else if (isset($_POST["downloadFile"])) {
+if (isset($_POST["downloadFile"])) {
     $data = $db->query("select path, type from uploads where id = ?", "d", $_POST["downloadFile"]);
     if ($data === false) {
         echo "Error finding file.";
@@ -156,9 +146,7 @@ foreach ($data as $entry) {
       <td><?=$entry['owner']?></td>
       <td><?=$entry['upload_date']?></td>
       <td>
-        <form method="post">
-            <button type="submit" class="btn btn-outline-primary" name="viewFile" value="<?=$entry['id']?>">View</button>
-        </form>
+        <a class="btn btn-outline-primary" href="<?=$entry['path']?>" role="button">View</a>
       </td>
       <td>
         <form method="post">
