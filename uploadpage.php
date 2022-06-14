@@ -21,27 +21,7 @@ $db = new Database();
 
 $folderPath = "uploads/";
 
-if (isset($_POST["downloadFile"])) {
-    $data = $db->query("select path, type from uploads where id = ?", "d", $_POST["downloadFile"]);
-    if ($data === false) {
-        echo "Error finding file.";
-    }
-    else if (!empty($data)) {
-        $file = $data[0]['path'];
-        $type = $data[0]['type'];
-        if (file_exists($file) && is_readable($file)) {
-            header("Content-Type: " . $type);
-            header("Content-Disposition: attachment; filename=\"" . basename($file) . "\"");
-            header('Pragma: no-cache'); 
-            header('Expires: 0');
-            set_time_limit(0);
-            ob_clean();
-            flush();
-            readfile($file);
-        }
-    }
-}
-else if (isset($_POST["deleteFile"])) {
+if (isset($_POST["deleteFile"])) {
     $path;
     $data = $db->query("select path from uploads where id = ?", "d", $_POST["deleteFile"]);
     if ($data === false) {
@@ -146,12 +126,10 @@ foreach ($data as $entry) {
       <td><?=$entry['owner']?></td>
       <td><?=$entry['upload_date']?></td>
       <td>
-        <a class="btn btn-outline-primary" href="<?=$entry['path']?>" role="button">View</a>
+        <a class="btn btn-outline-primary" href="<?=$entry['path']?>">View</a>
       </td>
       <td>
-        <form method="post">
-            <button type="submit" class="btn btn-outline-primary" name="downloadFile" value="<?=$entry['id']?>">Download</button>
-        </form>
+        <a class="btn btn-outline-primary" href="<?=$entry['path']?>" download>Download</a>
       </td>
       <td>
         <form method="post">
